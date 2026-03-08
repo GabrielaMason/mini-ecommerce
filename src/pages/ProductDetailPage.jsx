@@ -113,10 +113,6 @@ function ProductDetailPage({ products, productsStatus, onRetryProducts }) {
                             <button onClick={() => addToCart(product)}>
                                 Agregar al carrito
                             </button>
-
-                            <button onClick={() => navigate('/')}>
-                                Regresar al listado
-                            </button>
                         </div>
                     </div>
                 </section>

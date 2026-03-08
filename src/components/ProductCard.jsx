@@ -4,8 +4,28 @@ import { formatPrice } from '../utils/formatPrice';
 function ProductCard({ product, onViewDetail }) {
     const { addToCart } = useCart();
 
+    const handleCardClick = () => {
+        onViewDetail(product.id);
+    };
+
+    const handleAddToCart = (event) => {
+        event.stopPropagation();
+        addToCart(product);
+    };
+
     return (
-        <article className="product-card">
+        <article
+            className="product-card product-card--clickable"
+            onClick={handleCardClick}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    handleCardClick();
+                }
+            }}
+        >
             <img
                 src={product.image}
                 alt={product.title}
@@ -20,11 +40,7 @@ function ProductCard({ product, onViewDetail }) {
                 <p className="product-card__price">{formatPrice(product.price)}</p>
 
                 <div className="product-card__actions">
-                    <button onClick={() => onViewDetail(product.id)}>
-                        Ver detalle
-                    </button>
-
-                    <button onClick={() => addToCart(product)}>
+                    <button type="button" onClick={handleAddToCart}>
                         Agregar al carrito
                     </button>
                 </div>
