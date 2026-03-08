@@ -32,6 +32,10 @@ Este proyecto incluye:
 - Fake Store API
 - localStorage
 
+## Documentación complementaria
+
+- [Uso de IA](./AI_USAGE.md)
+
 ## Ejecución local
 
 ```bash
