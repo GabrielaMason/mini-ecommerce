@@ -1,14 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
+import Header from '../components/Header';
 import Loader from '../components/Loader';
 import ErrorState from '../components/ErrorState';
 
 function ProductDetailPage({ products, productsStatus, onRetryProducts }) {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { addToCart } = useCart();
 
     const [product, setProduct] = useState(null);
-    const [detailStatus, setDetailStatus] = useState(''); // loading | success | error
+    const [detailStatus, setDetailStatus] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
     const numericId = useMemo(() => Number(id), [id]);
@@ -56,10 +59,6 @@ function ProductDetailPage({ products, productsStatus, onRetryProducts }) {
         fetchProductById();
     }, [numericId, products, productsStatus]);
 
-    const handleAddToCart = () => {
-        console.log('Agregar al carrito desde detalle:', product);
-    };
-
     const handleRetry = () => {
         if (products.length === 0) {
             onRetryProducts();
@@ -89,32 +88,38 @@ function ProductDetailPage({ products, productsStatus, onRetryProducts }) {
     }
 
     return (
-        <main className="page">
-            <button className="back-button" onClick={() => navigate('/')}>
-                ← Regresar al listado
-            </button>
+        <>
+            <Header />
 
-            <section className="product-detail">
-                <div className="product-detail__image-wrapper">
-                    <img
-                        src={product.image}
-                        alt={product.title}
-                        className="product-detail__image"
-                    />
-                </div>
+            <main className="page">
+                <button className="back-button" onClick={() => navigate('/')}>
+                    ← Regresar al listado
+                </button>
 
-                <div className="product-detail__content">
-                    <span className="product-detail__category">{product.category}</span>
-                    <h1 className="product-detail__title">{product.title}</h1>
-                    <p className="product-detail__price">${product.price}</p>
-                    <p className="product-detail__description">{product.description}</p>
-
-                    <div className="product-detail__actions">
-                        <button onClick={handleAddToCart}>Agregar al carrito</button>
+                <section className="product-detail">
+                    <div className="product-detail__image-wrapper">
+                        <img
+                            src={product.image}
+                            alt={product.title}
+                            className="product-detail__image"
+                        />
                     </div>
-                </div>
-            </section>
-        </main>
+
+                    <div className="product-detail__content">
+                        <span className="product-detail__category">{product.category}</span>
+                        <h1 className="product-detail__title">{product.title}</h1>
+                        <p className="product-detail__price">${product.price}</p>
+                        <p className="product-detail__description">{product.description}</p>
+
+                        <div className="product-detail__actions">
+                            <button onClick={() => addToCart(product)}>
+                                Agregar al carrito
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </>
     );
 }
 

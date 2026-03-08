@@ -1,4 +1,8 @@
-function ProductCard({ product, onAddToCart, onViewDetail }) {
+import { useCart } from '../context/CartContext';
+
+function ProductCard({ product, onViewDetail }) {
+    const { addToCart } = useCart();
+
     return (
         <article className="product-card">
             <img
@@ -17,7 +21,7 @@ function ProductCard({ product, onAddToCart, onViewDetail }) {
                         Ver detalle
                     </button>
 
-                    <button onClick={() => onAddToCart(product)}>
+                    <button onClick={() => addToCart(product)}>
                         Agregar al carrito
                     </button>
                 </div>

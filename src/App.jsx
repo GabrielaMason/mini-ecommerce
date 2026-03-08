@@ -3,10 +3,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { getProducts } from './api/products';
 import ProductsPage from './pages/ProductsPage';
 import ProductDetailPage from './pages/ProductDetailPage';
+import CartPage from './pages/CartPage';
 
 function App() {
   const [products, setProducts] = useState([]);
-  const [status, setStatus] = useState(''); // loading | success | error
+  const [status, setStatus] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const fetchProducts = async () => {
@@ -54,6 +55,8 @@ function App() {
             />
           }
         />
+
+        <Route path="/cart" element={<CartPage />} />
       </Routes>
     </BrowserRouter>
   );
