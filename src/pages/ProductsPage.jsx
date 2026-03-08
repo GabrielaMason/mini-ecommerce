@@ -1,43 +1,20 @@
-import { useEffect, useState } from 'react';
-import { getProducts } from '../api/products';
+import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
 import ErrorState from '../components/ErrorState';
 import ProductCard from '../components/ProductCard';
 
-function ProductsPage() {
-    const [products, setProducts] = useState([]);
-    const [status, setStatus] = useState(''); // loading | success | error
-    const [errorMessage, setErrorMessage] = useState('');
-
-    const fetchProducts = async () => {
-        try {
-            setStatus('loading');
-            setErrorMessage('');
-
-            const data = await getProducts();
-            setProducts(data);
-            setStatus('success');
-        } catch (error) {
-            setErrorMessage(error.message || 'Ocurrió un error inesperado');
-            setStatus('error');
-        }
-    };
-
-    useEffect(() => {
-        if (products.length === 0) {
-            fetchProducts();
-        }
-    }, []);
+function ProductsPage({ products, status, errorMessage, onRetry }) {
+    const navigate = useNavigate();
 
     const handleAddToCart = (product) => {
         console.log('Agregar al carrito:', product);
     };
 
     const handleViewDetail = (productId) => {
-        console.log('Ir a detalle:', productId);
+        navigate(`/product/${productId}`);
     };
 
-    if (status === 'loading') {
+    if (status === 'loading' || status === 'idle') {
         return <Loader />;
     }
 
@@ -45,7 +22,7 @@ function ProductsPage() {
         return (
             <ErrorState
                 message={errorMessage}
-                onRetry={fetchProducts}
+                onRetry={onRetry}
             />
         );
     }
