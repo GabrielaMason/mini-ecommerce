@@ -1,16 +1,39 @@
-# React + Vite
+# Mini e-commerce
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación desarrollada en **React JS**.  
+El proyecto consume la API pública de Fake Store para mostrar productos, ver su detalle, agregarlos a un carrito de compra y completar un checkout simulado.
 
-Currently, two official plugins are available:
+## Demo funcional
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Este proyecto incluye:
 
-## React Compiler
+- Listado de productos obtenido desde API
+- Vista de detalle de producto
+- Carrito de compra con control de cantidades
+- Checkout simulado
+- Loader y manejo de errores con retry
+- Optimización para evitar llamadas innecesarias
+- Bonus:
+  - Filtro por categoría
+  - Búsqueda por nombre
+  - Persistencia del carrito con `localStorage`
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## API utilizada
 
-## Expanding the ESLint configuration
+- `GET https://fakestoreapi.com/products`
+- `GET https://fakestoreapi.com/products/:id`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tecnologías usadas
+
+- React JS
+- React Router DOM
+- Context API
+- CSS
+- Fake Store API
+- localStorage
+
+## Ejecución local
+
+```bash
+npm install
+npm run dev
