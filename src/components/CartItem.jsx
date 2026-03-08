@@ -1,3 +1,5 @@
+import { formatPrice } from '../utils/formatPrice';
+
 function CartItem({
     item,
     onIncrease,
@@ -17,16 +19,26 @@ function CartItem({
             <div className="cart-item__content">
                 <h3 className="cart-item__title">{item.title}</h3>
                 <p className="cart-item__category">{item.category}</p>
-                <p className="cart-item__price">${item.price}</p>
+                <p className="cart-item__price">{formatPrice(item.price)}</p>
                 <p className="cart-item__subtotal">
-                    Subtotal: ${subtotal.toFixed(2)}
+                    Subtotal: {formatPrice(subtotal)}
                 </p>
 
                 <div className="cart-item__actions">
-                    <button onClick={() => onDecrease(item.id)}>-</button>
+                    <button
+                        onClick={() => onDecrease(item.id)}
+                        disabled={item.quantity === 1}
+                    >
+                        -
+                    </button>
+
                     <span>{item.quantity}</span>
+
                     <button onClick={() => onIncrease(item.id)}>+</button>
-                    <button onClick={() => onRemove(item.id)}>Eliminar</button>
+
+                    <button onClick={() => onRemove(item.id)}>
+                        Eliminar
+                    </button>
                 </div>
             </div>
         </article>

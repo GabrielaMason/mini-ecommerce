@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { getProductById } from '../api/products';
 import { useCart } from '../context/CartContext';
+import { formatPrice } from '../utils/formatPrice';
 import Header from '../components/Header';
 import Loader from '../components/Loader';
 import ErrorState from '../components/ErrorState';
@@ -36,18 +38,12 @@ function ProductDetailPage({ products, productsStatus, onRetryProducts }) {
             return;
         }
 
-        const fetchProductById = async () => {
+        const fetchProduct = async () => {
             try {
                 setDetailStatus('loading');
                 setErrorMessage('');
 
-                const response = await fetch(`https://fakestoreapi.com/products/${numericId}`);
-
-                if (!response.ok) {
-                    throw new Error('No se pudo obtener el detalle del producto');
-                }
-
-                const data = await response.json();
+                const data = await getProductById(numericId);
                 setProduct(data);
                 setDetailStatus('success');
             } catch (error) {
@@ -56,12 +52,14 @@ function ProductDetailPage({ products, productsStatus, onRetryProducts }) {
             }
         };
 
-        fetchProductById();
+        fetchProduct();
     }, [numericId, products, productsStatus]);
 
     const handleRetry = () => {
         if (products.length === 0) {
             onRetryProducts();
+        } else {
+            navigate('/');
         }
     };
 
@@ -108,12 +106,16 @@ function ProductDetailPage({ products, productsStatus, onRetryProducts }) {
                     <div className="product-detail__content">
                         <span className="product-detail__category">{product.category}</span>
                         <h1 className="product-detail__title">{product.title}</h1>
-                        <p className="product-detail__price">${product.price}</p>
+                        <p className="product-detail__price">{formatPrice(product.price)}</p>
                         <p className="product-detail__description">{product.description}</p>
 
                         <div className="product-detail__actions">
                             <button onClick={() => addToCart(product)}>
                                 Agregar al carrito
+                            </button>
+
+                            <button onClick={() => navigate('/')}>
+                                Regresar al listado
                             </button>
                         </div>
                     </div>

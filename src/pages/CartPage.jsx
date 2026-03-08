@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import CartItem from '../components/CartItem';
 import { useCart } from '../context/CartContext';
+import { formatPrice } from '../utils/formatPrice';
 
 function CartPage() {
     const {
@@ -63,6 +64,7 @@ function CartPage() {
                 ) : cartItems.length === 0 ? (
                     <section className="empty-state">
                         <p>Tu carrito está vacío.</p>
+                        <p>Agrega productos desde el listado o desde el detalle.</p>
                         <Link to="/" className="link-button">
                             Ir a productos
                         </Link>
@@ -78,7 +80,7 @@ function CartPage() {
                                         <strong>{item.title}</strong>
                                     </p>
                                     <p>Cantidad: {item.quantity}</p>
-                                    <p>Subtotal: ${item.subtotal.toFixed(2)}</p>
+                                    <p>Subtotal: {formatPrice(item.subtotal)}</p>
                                 </article>
                             ))}
                         </div>
@@ -88,7 +90,7 @@ function CartPage() {
                                 <strong>Total de productos:</strong> {totalItems}
                             </p>
                             <p>
-                                <strong>Total a pagar:</strong> ${totalPrice.toFixed(2)}
+                                <strong>Total a pagar:</strong> {formatPrice(totalPrice)}
                             </p>
                         </div>
 
@@ -122,7 +124,7 @@ function CartPage() {
                                 <strong>Total de productos:</strong> {totalItems}
                             </p>
                             <p>
-                                <strong>Total a pagar:</strong> ${totalPrice.toFixed(2)}
+                                <strong>Total a pagar:</strong> {formatPrice(totalPrice)}
                             </p>
 
                             <button className="checkout-button" onClick={handleStartCheckout}>

@@ -1,4 +1,5 @@
 import { useCart } from '../context/CartContext';
+import { formatPrice } from '../utils/formatPrice';
 
 function ProductCard({ product, onViewDetail }) {
     const { addToCart } = useCart();
@@ -13,8 +14,10 @@ function ProductCard({ product, onViewDetail }) {
 
             <div className="product-card__content">
                 <span className="product-card__category">{product.category}</span>
-                <h3 className="product-card__title">{product.title}</h3>
-                <p className="product-card__price">${product.price}</p>
+                <h3 className="product-card__title" title={product.title}>
+                    {product.title}
+                </h3>
+                <p className="product-card__price">{formatPrice(product.price)}</p>
 
                 <div className="product-card__actions">
                     <button onClick={() => onViewDetail(product.id)}>
